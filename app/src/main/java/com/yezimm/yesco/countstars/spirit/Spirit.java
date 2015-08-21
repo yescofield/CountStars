@@ -10,6 +10,11 @@ import android.view.MotionEvent;
 public abstract class Spirit {
 
     /**
+     * default priority by the spirit
+     */
+    public static final int PRIORITY_DEFAULT = 5 ;
+
+    /**
      * <p>pre spirit is a life in the game world, so the spirit have a location<p/>
      * <p>the x-axis about the spirit's location</p>
      */
@@ -21,7 +26,10 @@ public abstract class Spirit {
      */
     private float y ;
 
-    public Spirit() { }
+    /**
+     * the spirit show priority
+     */
+    private int priority ;
 
     /**
      * the axis is game world's axis. so that, the axis center is the spirit center that not in phone start location
@@ -31,6 +39,19 @@ public abstract class Spirit {
     public Spirit(float x, float y) {
         this.x = x ;
         this.y = y ;
+        this.priority = PRIORITY_DEFAULT ;
+    }
+
+    /**
+     * the axis is game world's axis. so that, the axis center is the spirit center that not in phone start location
+     * @param x the real world x-axis
+     * @param y the real world y-axis
+     * @param priority the spirit show priority
+     */
+    public Spirit(float x, float y, int priority) {
+        this.x = x ;
+        this.y = y ;
+        this.priority = priority ;
     }
 
     /**
@@ -80,6 +101,14 @@ public abstract class Spirit {
 
     public void setY(float y) {
         this.y = y;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
     private OnClickListener onClickListener ;

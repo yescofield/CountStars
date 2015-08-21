@@ -1,5 +1,6 @@
 package com.yezimm.yesco.countstars.spirit;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.MotionEvent;
@@ -9,9 +10,16 @@ import android.view.MotionEvent;
  */
 public class Stars extends Spirit{
 
+    private Bitmap mStarsBmp;
+
+    public Stars(float x, float y, Bitmap bgBmp) {
+        super(x, y);
+        mStarsBmp = bgBmp ;
+    }
+
     @Override
     public void onDraw(Canvas canvas, Paint paint) {
-
+        canvas.drawBitmap(mStarsBmp, getX() - mStarsBmp.getWidth() / 2, getY() - mStarsBmp.getHeight() / 2, paint);
     }
 
     @Override
