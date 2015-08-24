@@ -5,21 +5,24 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 
+import org.jbox2d.dynamics.Body;
+
 /**
  * Created by yesco on 2015/8/21.
  */
 public class Stars extends Spirit{
 
-    private Bitmap mStarsBmp;
-
-    public Stars(float x, float y, Bitmap bgBmp) {
-        super(x, y);
-        mStarsBmp = bgBmp ;
+    public Stars(float x, float y, Bitmap bodyBmp) {
+        super(x, y, bodyBmp);
     }
 
     @Override
     public void onDraw(Canvas canvas, Paint paint) {
-        canvas.drawBitmap(mStarsBmp, getX() - mStarsBmp.getWidth() / 2, getY() - mStarsBmp.getHeight() / 2, paint);
+    }
+
+    @Override
+    public void logic(Body body) {
+
     }
 
     @Override

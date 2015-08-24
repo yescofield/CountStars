@@ -7,21 +7,25 @@ import android.view.MotionEvent;
 
 import com.yezimm.yesco.countstars.spirit.Spirit;
 
+import org.jbox2d.dynamics.Body;
+
 /**
  * Created by yesco on 2015/8/21.
  */
 public class Scene extends Spirit{
 
-    private Bitmap mBgBmp ;
-
-    public Scene(float x, float y, Bitmap bgBmp) {
-        super(x, y);
-        mBgBmp = bgBmp ;
+    public Scene(float x, float y, Bitmap bodyBmp) {
+        super(x, y, bodyBmp);
     }
 
     @Override
     public void onDraw(Canvas canvas, Paint paint) {
-        canvas.drawBitmap(mBgBmp, getX() - mBgBmp.getWidth() / 2, getY() - mBgBmp.getHeight() / 2, paint);
+        super.onDraw(canvas, paint);
+    }
+
+    @Override
+    public void logic(Body body) {
+
     }
 
     @Override

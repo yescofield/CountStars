@@ -1,8 +1,11 @@
 package com.yezimm.yesco.countstars.spirit;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.MotionEvent;
+
+import org.jbox2d.dynamics.Body;
 
 /**
  * Created by yesco on 2015/8/21.
@@ -27,6 +30,11 @@ public abstract class Spirit {
     private float y ;
 
     /**
+     * a see body
+     */
+    private Bitmap body ;
+
+    /**
      * the spirit show priority
      */
     private int priority ;
@@ -36,9 +44,10 @@ public abstract class Spirit {
      * @param x the real world x-axis
      * @param y the real world y-axis
      */
-    public Spirit(float x, float y) {
+    public Spirit(float x, float y, Bitmap body) {
         this.x = x ;
         this.y = y ;
+        this.body = body ;
         this.priority = PRIORITY_DEFAULT ;
     }
 
@@ -48,9 +57,10 @@ public abstract class Spirit {
      * @param y the real world y-axis
      * @param priority the spirit show priority
      */
-    public Spirit(float x, float y, int priority) {
+    public Spirit(float x, float y, Bitmap body, int priority) {
         this.x = x ;
         this.y = y ;
+        this.body = body ;
         this.priority = priority ;
     }
 
@@ -61,16 +71,21 @@ public abstract class Spirit {
      * @param paint
      *              <p>Paint pen</p>
      */
-    public abstract void onDraw(Canvas canvas, Paint paint) ;
+    public void onDraw(Canvas canvas, Paint paint) {
+        canvas.drawBitmap(body, x - body.getWidth() / 2, y - body.getHeight() / 2, paint);
+    }
+
+    /**
+     * Everyone Spirit have to a life, so in game world that the spirit have a lifetime what it is logic.
+     */
+    public abstract void logic(Body b) ;
 
     /**
      * callback function when user touch the spirit
-     * @param spirit
-     *              <p>the spirit</p>
      * @param event
      *              <p>touch event</p>
      */
-    public void onTouch(Spirit spirit, MotionEvent event) {
+    public void onTouch(MotionEvent event) {
         boolean isClick = false ;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN :
@@ -83,7 +98,7 @@ public abstract class Spirit {
                 break;
         }
         if (isClick) {
-            onClickListener.onClick(spirit);
+            onClickListener.onClick(this);
         }
     }
 
@@ -101,6 +116,14 @@ public abstract class Spirit {
 
     public void setY(float y) {
         this.y = y;
+    }
+
+    public Bitmap getBody() {
+        return body;
+    }
+
+    public void setBody(Bitmap body) {
+        this.body = body;
     }
 
     public int getPriority() {
