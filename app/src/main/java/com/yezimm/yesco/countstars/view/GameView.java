@@ -72,6 +72,7 @@ public class GameView extends SurfaceView implements Callback, Runnable {
         th = new Thread(this);
         th.start();
     }
+
     public Body createCircle(float x, float y, float r, boolean isStatic) {
         CircleDef cd = new CircleDef();
         if (isStatic) {
@@ -133,6 +134,17 @@ public class GameView extends SurfaceView implements Callback, Runnable {
     public boolean onTouchEvent(MotionEvent event) {
 //        Vec2 vForce = new Vec2(150,-550);
 //        body1.applyForce(vForce, body1.getWorldCenter());
+        // --开始模拟物理世界--->>
+        world.step(timeStep, iterations);// 物理世界进行模拟
+        // 取出body链表表头
+        Body body = world.getBodyList();
+        for (int i = 1; i < world.getBodyCount(); i++) {
+            // 执行SpiritContain中的logic
+            Spirit mc = (Spirit) body.m_userData;
+            mc.onTouch(event, body);
+            // 将链表指针指向下一个body元素
+            body = body.m_next;
+        }
         return super.onTouchEvent(event);
     }
 

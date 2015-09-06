@@ -85,7 +85,7 @@ public abstract class Spirit {
      * @param event
      *              <p>touch event</p>
      */
-    public void onTouch(MotionEvent event) {
+    public void onTouch(MotionEvent event, Body b) {
         boolean isClick = false ;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN :
@@ -98,7 +98,7 @@ public abstract class Spirit {
                 break;
         }
         if (isClick) {
-            onClickListener.onClick(this);
+            onClickListener.onClick(b);
         }
     }
 
@@ -144,7 +144,7 @@ public abstract class Spirit {
      * the listener function is when user click register this listener spirit callback method .
      */
     public interface OnClickListener {
-        void onClick(Spirit spirit);
+        void onClick(Body b);
     }
 
 }

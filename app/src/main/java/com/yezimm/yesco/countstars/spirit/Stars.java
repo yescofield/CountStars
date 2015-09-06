@@ -26,7 +26,8 @@ public class Stars extends Spirit{
     }
 
     @Override
-    public void onTouch(MotionEvent event) {
-        super.onTouch(event);
+    public void onTouch(MotionEvent event, Body body) {
+        
+        super.onTouch(event, body);
     }
 }
