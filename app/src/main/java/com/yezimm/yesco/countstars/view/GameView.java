@@ -109,9 +109,7 @@ public class GameView extends SurfaceView implements Callback, Runnable {
                     body = body.m_next;
                 }
             }
-        } catch (Exception e) {
-            Log.e("Himi", "myDraw is Error!");
-        } finally {
+        } catch (Exception e) { } finally {
             if (canvas != null)
                 sfh.unlockCanvasAndPost(canvas);
         }
