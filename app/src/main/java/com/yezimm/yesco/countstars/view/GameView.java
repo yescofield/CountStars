@@ -80,8 +80,7 @@ public class GameView extends SurfaceView implements Callback, Runnable {
         pd.setAsBox(spirit.getBody().getWidth() / 2 / RATE, spirit.getBody().getHeight() / 2 / RATE);
         //创建刚体
         BodyDef bd = new BodyDef();//实例一个刚体对象
-        bd.position.set((spirit.getX() + spirit.getBody().getWidth() / 2) / RATE,
-                (spirit.getY() + spirit.getBody().getHeight() / 2) / RATE);
+        bd.position.set(spirit.getX() / RATE, spirit.getY() / RATE);
         Body body = world.createBody(bd);
         //在body中保存自定义类
         body.m_userData = spirit;
