@@ -29,7 +29,7 @@ public class Scene extends Spirit{
     }
 
     @Override
-    public void onTouch(Spirit spirit, MotionEvent event) {
-        super.onTouch(spirit, event);
+    public void onTouch(MotionEvent event, Body b) {
+        super.onTouch(event, b);
     }
 }

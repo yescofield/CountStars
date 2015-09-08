@@ -1,5 +1,7 @@
 package com.yezimm.yesco.countstars.utils;
 
+import com.yezimm.yesco.countstars.spirit.Spirit;
+
 import org.jbox2d.dynamics.Body;
 
 /**
@@ -11,12 +13,29 @@ public class PhysicalUtils {
 
     /**
      *
-     * @param bodyA
-     * @param bodyB
+     * @param bodyA 物理世界body A
+     * @param bodyB 物理世界body B
      * @return
      */
     public static boolean isCollision(Body bodyA, Body bodyB) {
-        return false;
+        if (bodyA == null || bodyB == null) {
+            return false;
+        }
+        Spirit spiritA = (Spirit) bodyA.m_userData;
+        Spirit spiritB = (Spirit) bodyB.m_userData;
+        return isCollision(spiritA, spiritB);
+    }
+
+    private static boolean isCollision(Spirit spiritA, Spirit spiritB) {
+        float ax = spiritA.getX();
+        float ay = spiritA.getY();
+        float aw = spiritA.getBody().getWidth();
+        float ah = spiritA.getBody().getHeight();
+        float bx = spiritB.getX();
+        float by = spiritB.getY();
+        float bw = spiritB.getBody().getWidth();
+        float bh = spiritB.getBody().getHeight();
+        return isCollision(ax, ay, aw, ah, bx, by, bw, bh);
     }
 
     /**
@@ -33,9 +52,17 @@ public class PhysicalUtils {
      * @param bh 矩形B的高
      * @return
      */
-    public static boolean isCollision(float ax, float ay, float bx, float by,
+    private static boolean isCollision(float ax, float ay, float bx, float by,
                                 float aw, float ah, float bw, float bh) {
-        
-        return false;
+        if (ax > bx && ax > bx + bw) {
+            return false;
+        } else if (ax < bx && ax + aw < bx) {
+            return false;
+        } else if (ay > by && ay > by + bh) {
+            return false;
+        } else if (ay < by && ay + ah < by) {
+            return false;
+        }
+        return true;
     }
 }
