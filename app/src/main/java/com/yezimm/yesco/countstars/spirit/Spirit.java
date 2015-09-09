@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.view.MotionEvent;
 
 import com.yezimm.yesco.countstars.config.Global;
+import com.yezimm.yesco.countstars.utils.PhysicalUtils;
 
 import org.jbox2d.dynamics.Body;
 
@@ -117,8 +118,10 @@ public abstract class Spirit {
             case MotionEvent.ACTION_UP :
                 break;
         }
-        if (isClick) {
-            onClickListener.onClick(b);
+        if (isClick && PhysicalUtils.isCollision(event.getX(), event.getY(), x, y, 0, 0, bodyBmp.getWidth(), bodyBmp.getHeight())) {
+            if (onClickListener != null) {
+                onClickListener.onClick(b);
+            }
             onClick(b);
         }
     }

@@ -8,6 +8,8 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.World;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -18,8 +20,12 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 
+import com.yezimm.yesco.countstars.R;
 import com.yezimm.yesco.countstars.config.Global;
+import com.yezimm.yesco.countstars.scene.SpiritContain;
 import com.yezimm.yesco.countstars.spirit.Spirit;
+import com.yezimm.yesco.countstars.spirit.Stars;
+import com.yezimm.yesco.countstars.utils.XYUtils;
 
 public class GameView extends SurfaceView implements Callback, Runnable {
     private Thread th;
@@ -31,6 +37,8 @@ public class GameView extends SurfaceView implements Callback, Runnable {
     World world;// 声明一个物理世界对象
     AABB aabb;// 声明一个物理世界的范围对象
     Vec2 gravity;// 声明一个重力向量对象
+
+    private Bitmap starsBmp ;
 
     public GameView(Context context) {
         super(context);
@@ -47,6 +55,16 @@ public class GameView extends SurfaceView implements Callback, Runnable {
         aabb.lowerBound.set(-100, -100);// 设置物理世界范围的左上角坐标
         aabb.upperBound.set(100, 100);// 设置物理世界范围的右下角坐标
         world = new World(aabb, gravity, true);// 实例化物理世界对象
+
+        starsBmp = BitmapFactory.decodeResource(getResources(), R.mipmap.bird_yellow);
+        int [] xy ;
+        for (int i = 0; i < 5; i ++) {
+            xy = XYUtils.getXY(Global.PRIORITY_STARS, starsBmp.getWidth(), starsBmp.getHeight());
+            Stars stars = new Stars(xy[0], xy[1], starsBmp) ;
+            createBodyBySpirit(stars, true);
+            SpiritContain.getInstance().addSpirit(stars);
+        }
+
     }
 
     public void surfaceCreated(SurfaceHolder holder) {

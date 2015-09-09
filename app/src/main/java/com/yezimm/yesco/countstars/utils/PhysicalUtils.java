@@ -26,7 +26,7 @@ public class PhysicalUtils {
         return isCollision(spiritA, spiritB);
     }
 
-    private static boolean isCollision(Spirit spiritA, Spirit spiritB) {
+    public static boolean isCollision(Spirit spiritA, Spirit spiritB) {
         float ax = spiritA.getX();
         float ay = spiritA.getY();
         float aw = spiritA.getBodyBmp().getWidth();
@@ -52,8 +52,12 @@ public class PhysicalUtils {
      * @param bh 矩形B的高
      * @return
      */
-    private static boolean isCollision(float ax, float ay, float bx, float by,
+    public static boolean isCollision(float ax, float ay, float bx, float by,
                                 float aw, float ah, float bw, float bh) {
+        ax -= aw / 2 ;
+        ay -= ah / 2 ;
+        bx -= bw / 2 ;
+        by -= bh / 2 ;
         if (ax > bx && ax > bx + bw) {
             return false;
         } else if (ax < bx && ax + aw < bx) {

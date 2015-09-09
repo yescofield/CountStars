@@ -3,7 +3,9 @@ package com.yezimm.yesco.countstars.spirit;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.view.MotionEvent;
+import android.widget.Toast;
+
+import com.yezimm.yesco.countstars.MainActivity;
 
 import org.jbox2d.dynamics.Body;
 
@@ -28,6 +30,6 @@ public class Stars extends Spirit{
 
     @Override
     public void onClick(Body body) {
-
+        Toast.makeText(MainActivity.getInstance(), "Stars", Toast.LENGTH_SHORT).show();
     }
 }

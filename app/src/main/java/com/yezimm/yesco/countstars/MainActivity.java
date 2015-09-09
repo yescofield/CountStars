@@ -9,9 +9,16 @@ import com.yezimm.yesco.countstars.view.GameView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static MainActivity INSTANCE ;
+
+    public static MainActivity getInstance() {
+        return INSTANCE;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        INSTANCE = this ;
         setContentView(new GameView(this));
     }
 

@@ -13,7 +13,7 @@ public class XYUtils {
      * @param priority onDraw优先级，主要是区分Scene与Stars
      * @return size为2的int [] xy = new int[2]数组，xy[0]为X轴坐标，xy[1]为Y轴坐标
      */
-    public static int[] getXY(int priority) {
+    public static int[] getXY(int priority, int width, int height) {
         int [] xy = new int[2] ;
         switch (priority) {
             case Global.PRIORITY_SCENE:
@@ -21,12 +21,24 @@ public class XYUtils {
                 xy[1] = 0;
                 break;
             case Global.PRIORITY_STARS:
-                xy[0] = getRandom(SysUtils.getScreenW() / 2);
-                xy[1] = getRandom(SysUtils.getScreenH() / 2);
+                xy[0] = getRandom(SysUtils.getScreenW() - width / 2);
+                xy[1] = getRandom(SysUtils.getScreenH() - height / 2);
+                if (xy[0] < width / 2) {
+                    xy[0] = width / 2 ;
+                }
+                if (xy[1] < height / 2) {
+                    xy[1] = height / 2 ;
+                }
                 break;
             case Global.PRIORITY_DEFAULT:
-                xy[0] = getRandom(SysUtils.getScreenW() / 2);
-                xy[1] = getRandom(SysUtils.getScreenH() / 2);
+                xy[0] = getRandom(SysUtils.getScreenW() - width / 2);
+                xy[1] = getRandom(SysUtils.getScreenH() - height / 2);
+                if (xy[0] < width / 2) {
+                    xy[0] = width / 2 ;
+                }
+                if (xy[1] < height / 2) {
+                    xy[1] = height / 2 ;
+                }
                 break;
             default:
                 xy[0] = 0;
