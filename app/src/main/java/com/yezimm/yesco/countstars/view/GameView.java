@@ -22,9 +22,11 @@ import android.view.SurfaceView;
 
 import com.yezimm.yesco.countstars.R;
 import com.yezimm.yesco.countstars.config.Global;
+import com.yezimm.yesco.countstars.scene.Scene;
 import com.yezimm.yesco.countstars.scene.SpiritContain;
 import com.yezimm.yesco.countstars.spirit.Spirit;
 import com.yezimm.yesco.countstars.spirit.Stars;
+import com.yezimm.yesco.countstars.utils.SysUtils;
 import com.yezimm.yesco.countstars.utils.XYUtils;
 
 public class GameView extends SurfaceView implements Callback, Runnable {
@@ -39,6 +41,7 @@ public class GameView extends SurfaceView implements Callback, Runnable {
     Vec2 gravity;// 声明一个重力向量对象
 
     private Bitmap starsBmp ;
+    private Bitmap nightBmp ;
 
     public GameView(Context context) {
         super(context);
@@ -61,10 +64,13 @@ public class GameView extends SurfaceView implements Callback, Runnable {
         for (int i = 0; i < 5; i ++) {
             xy = XYUtils.getXY(Global.PRIORITY_STARS, starsBmp.getWidth(), starsBmp.getHeight());
             Stars stars = new Stars(xy[0], xy[1], starsBmp) ;
-            createBodyBySpirit(stars, true);
+            createBodyBySpirit(stars, i % 2 == 0);
             SpiritContain.getInstance().addSpirit(stars);
         }
 
+        nightBmp = BitmapFactory.decodeResource(getResources(), R.mipmap.night);
+        Scene scene = new Scene(SysUtils.getScreenW() / 2, SysUtils.getScreenH() / 2, nightBmp);
+        createBodyBySpirit(scene, true);
     }
 
     public void surfaceCreated(SurfaceHolder holder) {
@@ -88,6 +94,7 @@ public class GameView extends SurfaceView implements Callback, Runnable {
         }
         pd.friction = 0.8f; //设置图片body的摩擦力
         pd.restitution = 0.3f; //设置图片body的恢复力
+        pd.filter.groupIndex = -1 ;
         //设置图片Body快捷成盒子（矩形）
         //两个参数为图片Body宽高的一半
         pd.setAsBox(spirit.getBodyBmp().getWidth() / 2 / Global.RATE, spirit.getBodyBmp().getHeight() / 2 / Global.RATE);

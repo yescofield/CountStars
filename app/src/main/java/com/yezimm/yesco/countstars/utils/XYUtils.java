@@ -21,23 +21,23 @@ public class XYUtils {
                 xy[1] = 0;
                 break;
             case Global.PRIORITY_STARS:
-                xy[0] = getRandom(SysUtils.getScreenW() - width / 2);
-                xy[1] = getRandom(SysUtils.getScreenH() - height / 2);
-                if (xy[0] < width / 2) {
-                    xy[0] = width / 2 ;
+                xy[0] = getRandom(SysUtils.getScreenW() - width);
+                xy[1] = getRandom(SysUtils.getScreenH() - height);
+                if (xy[0] < width) {
+                    xy[0] = width;
                 }
-                if (xy[1] < height / 2) {
-                    xy[1] = height / 2 ;
+                if (xy[1] < height) {
+                    xy[1] = height;
                 }
                 break;
             case Global.PRIORITY_DEFAULT:
-                xy[0] = getRandom(SysUtils.getScreenW() - width / 2);
-                xy[1] = getRandom(SysUtils.getScreenH() - height / 2);
-                if (xy[0] < width / 2) {
-                    xy[0] = width / 2 ;
+                xy[0] = getRandom(SysUtils.getScreenW() - width);
+                xy[1] = getRandom(SysUtils.getScreenH() - height);
+                if (xy[0] < width) {
+                    xy[0] = width;
                 }
-                if (xy[1] < height / 2) {
-                    xy[1] = height / 2 ;
+                if (xy[1] < height) {
+                    xy[1] = height;
                 }
                 break;
             default:
