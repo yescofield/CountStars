@@ -29,12 +29,12 @@ public class PhysicalUtils {
     private static boolean isCollision(Spirit spiritA, Spirit spiritB) {
         float ax = spiritA.getX();
         float ay = spiritA.getY();
-        float aw = spiritA.getBody().getWidth();
-        float ah = spiritA.getBody().getHeight();
+        float aw = spiritA.getBodyBmp().getWidth();
+        float ah = spiritA.getBodyBmp().getHeight();
         float bx = spiritB.getX();
         float by = spiritB.getY();
-        float bw = spiritB.getBody().getWidth();
-        float bh = spiritB.getBody().getHeight();
+        float bw = spiritB.getBodyBmp().getWidth();
+        float bh = spiritB.getBodyBmp().getHeight();
         return isCollision(ax, ay, aw, ah, bx, by, bw, bh);
     }
 

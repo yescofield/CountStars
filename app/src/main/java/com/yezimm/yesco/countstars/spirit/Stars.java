@@ -18,16 +18,16 @@ public class Stars extends Spirit{
 
     @Override
     public void onDraw(Canvas canvas, Paint paint) {
+        super.onDraw(canvas, paint);
     }
 
     @Override
     public void logic(Body body) {
-
+        super.logic(body);
     }
 
     @Override
-    public void onTouch(MotionEvent event, Body body) {
-        
-        super.onTouch(event, body);
+    public void onClick(Body body) {
+
     }
 }

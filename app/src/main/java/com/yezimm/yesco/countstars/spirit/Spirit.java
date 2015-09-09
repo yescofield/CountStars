@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 
+import com.yezimm.yesco.countstars.config.Global;
+
 import org.jbox2d.dynamics.Body;
 
 /**
@@ -30,9 +32,14 @@ public abstract class Spirit {
     private float y ;
 
     /**
-     * a see body
+     * a see bodyBmp
      */
-    private Bitmap body ;
+    private Bitmap bodyBmp;
+
+    /**
+     * the spirit in world angle
+     */
+    private float angle ;
 
     /**
      * the spirit show priority
@@ -44,10 +51,10 @@ public abstract class Spirit {
      * @param x the real world x-axis
      * @param y the real world y-axis
      */
-    public Spirit(float x, float y, Bitmap body) {
+    public Spirit(float x, float y, Bitmap bodyBmp) {
         this.x = x ;
         this.y = y ;
-        this.body = body ;
+        this.bodyBmp = bodyBmp ;
         this.priority = PRIORITY_DEFAULT ;
     }
 
@@ -60,7 +67,7 @@ public abstract class Spirit {
     public Spirit(float x, float y, Bitmap body, int priority) {
         this.x = x ;
         this.y = y ;
-        this.body = body ;
+        this.bodyBmp = body ;
         this.priority = priority ;
     }
 
@@ -72,13 +79,26 @@ public abstract class Spirit {
      *              <p>Paint pen</p>
      */
     public void onDraw(Canvas canvas, Paint paint) {
-        canvas.drawBitmap(body, x - body.getWidth() / 2, y - body.getHeight() / 2, paint);
+        canvas.save();
+        canvas.rotate(angle, x, y);
+        canvas.drawBitmap(bodyBmp, x - bodyBmp.getWidth() / 2, y - bodyBmp.getHeight() / 2, paint);
+        canvas.restore();
     }
 
     /**
      * Everyone Spirit have to a life, so in game world that the spirit have a lifetime what it is logic.
      */
-    public abstract void logic(Body b) ;
+    public void logic(Body b) {
+        // 得到当前body的角度
+        float angele = (float) (b.getAngle() * 180 / Math.PI);
+        // 得到当前body的质点X坐标
+        float bodyX = b.getPosition().x * Global.RATE - bodyBmp.getWidth() / 2;
+        // 得到当前body的质点Y坐标
+        float bodyY = b.getPosition().y * Global.RATE - bodyBmp.getHeight() / 2;
+        this.setAngle(angele);
+        this.setX(bodyX);
+        this.setY(bodyY);
+    }
 
     /**
      * callback function when user touch the spirit
@@ -99,6 +119,7 @@ public abstract class Spirit {
         }
         if (isClick) {
             onClickListener.onClick(b);
+            onClick(b);
         }
     }
 
@@ -118,12 +139,20 @@ public abstract class Spirit {
         this.y = y;
     }
 
-    public Bitmap getBody() {
-        return body;
+    public Bitmap getBodyBmp() {
+        return bodyBmp;
     }
 
-    public void setBody(Bitmap body) {
-        this.body = body;
+    public void setBodyBmp(Bitmap bodyBmp) {
+        this.bodyBmp = bodyBmp;
+    }
+
+    /**
+     * 设置Body的旋转角度
+     * @param angle
+     */
+    public void setAngle(float angle) {
+        this.angle = angle;
     }
 
     public int getPriority() {
@@ -133,6 +162,11 @@ public abstract class Spirit {
     public void setPriority(int priority) {
         this.priority = priority;
     }
+
+    /**
+     * 被点击了回调
+     */
+    public abstract void onClick(Body body) ;
 
     private OnClickListener onClickListener ;
 
@@ -144,7 +178,7 @@ public abstract class Spirit {
      * the listener function is when user click register this listener spirit callback method .
      */
     public interface OnClickListener {
-        void onClick(Body b);
+        void onClick(Body body);
     }
 
 }

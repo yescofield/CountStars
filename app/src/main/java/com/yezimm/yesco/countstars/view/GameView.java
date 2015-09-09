@@ -1,7 +1,6 @@
 package com.yezimm.yesco.countstars.view;
 
 import org.jbox2d.collision.AABB;
-import org.jbox2d.collision.CircleDef;
 import org.jbox2d.collision.PolygonDef;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -9,18 +8,17 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.World;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 
+import com.yezimm.yesco.countstars.config.Global;
 import com.yezimm.yesco.countstars.spirit.Spirit;
 
 public class GameView extends SurfaceView implements Callback, Runnable {
@@ -30,12 +28,9 @@ public class GameView extends SurfaceView implements Callback, Runnable {
     private Paint paint;
     private boolean flag;
     // ----添加一个物理世界---->>
-    final float RATE = 30;// 屏幕到现实世界的比例 30px：1m;
     World world;// 声明一个物理世界对象
     AABB aabb;// 声明一个物理世界的范围对象
     Vec2 gravity;// 声明一个重力向量对象
-    float timeStep = 1f / 60f;// 物理世界模拟的的频率
-    int iterations = 10;// 迭代值，迭代越大模拟越精确，但性能越低
 
     public GameView(Context context) {
         super(context);
@@ -77,10 +72,10 @@ public class GameView extends SurfaceView implements Callback, Runnable {
         pd.restitution = 0.3f; //设置图片body的恢复力
         //设置图片Body快捷成盒子（矩形）
         //两个参数为图片Body宽高的一半
-        pd.setAsBox(spirit.getBody().getWidth() / 2 / RATE, spirit.getBody().getHeight() / 2 / RATE);
+        pd.setAsBox(spirit.getBodyBmp().getWidth() / 2 / Global.RATE, spirit.getBodyBmp().getHeight() / 2 / Global.RATE);
         //创建刚体
         BodyDef bd = new BodyDef();//实例一个刚体对象
-        bd.position.set(spirit.getX() / RATE, spirit.getY() / RATE);
+        bd.position.set(spirit.getX() / Global.RATE, spirit.getY() / Global.RATE);
         Body body = world.createBody(bd);
         //在body中保存自定义类
         body.m_userData = spirit;
@@ -108,7 +103,7 @@ public class GameView extends SurfaceView implements Callback, Runnable {
 
     public void Logic() {
         // --开始模拟物理世界--->>
-        world.step(timeStep, iterations);// 物理世界进行模拟
+        world.step(Global.timeStep, Global.iterations);// 物理世界进行模拟
         // 取出body链表表头
         Body body = world.getBodyList();
         for (int i = 1; i < world.getBodyCount(); i++) {
@@ -123,7 +118,7 @@ public class GameView extends SurfaceView implements Callback, Runnable {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         // --开始模拟物理世界--->>
-        world.step(timeStep, iterations);// 物理世界进行模拟
+        world.step(Global.timeStep, Global.iterations);// 物理世界进行模拟
         // 取出body链表表头
         Body body = world.getBodyList();
         for (int i = 1; i < world.getBodyCount(); i++) {
@@ -141,7 +136,7 @@ public class GameView extends SurfaceView implements Callback, Runnable {
             myDraw();
             Logic();
             try {
-                Thread.sleep((long) timeStep * 1000);
+                Thread.sleep((long) Global.timeStep * 1000);
             } catch (Exception ex) {
                 Log.e("YESCO", "Thread is Error!");
             }
