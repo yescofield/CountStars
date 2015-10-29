@@ -7,6 +7,8 @@ import android.view.MenuItem;
 
 import com.yezimm.yesco.countstars.view.GameView;
 
+import tyrantgit.explosionfield.ExplosionField;
+
 public class MainActivity extends AppCompatActivity {
 
     private static MainActivity INSTANCE ;
@@ -15,11 +17,18 @@ public class MainActivity extends AppCompatActivity {
         return INSTANCE;
     }
 
+    private ExplosionField mExplosionField;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         INSTANCE = this ;
         setContentView(new GameView(this));
+        mExplosionField = ExplosionField.attach2Window(this);
+    }
+
+    public ExplosionField getExplosionField() {
+        return mExplosionField;
     }
 
     @Override
@@ -43,4 +52,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
