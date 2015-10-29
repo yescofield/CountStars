@@ -1,8 +1,6 @@
 package com.yezimm.yesco.countstars.spirit;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
+import android.graphics.*;
 import android.view.MotionEvent;
 
 import com.yezimm.yesco.countstars.config.Global;
@@ -122,7 +120,7 @@ public abstract class Spirit {
             if (onClickListener != null) {
                 onClickListener.onClick(b);
             }
-            onClick(b);
+            onClick(b, new Point((int)event.getX(), (int)event.getY()));
         }
     }
 
@@ -169,7 +167,7 @@ public abstract class Spirit {
     /**
      * 被点击了回调
      */
-    public abstract void onClick(Body body) ;
+    public abstract void onClick(Body body, Point point) ;
 
     private OnClickListener onClickListener ;
 

@@ -3,6 +3,7 @@ package com.yezimm.yesco.countstars.scene;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.view.MotionEvent;
 
 import com.yezimm.yesco.countstars.spirit.Spirit;
@@ -29,7 +30,7 @@ public class Scene extends Spirit{
     }
 
     @Override
-    public void onClick(Body body) {
+    public void onClick(Body body, Point point) {
 
     }
 }
