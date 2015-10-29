@@ -64,7 +64,7 @@ public class GameView extends SurfaceView implements Callback, Runnable {
         for (int i = 0; i < 5; i ++) {
             xy = XYUtils.getXY(Global.PRIORITY_STARS, starsBmp.getWidth(), starsBmp.getHeight());
             Stars stars = new Stars(xy[0], xy[1], starsBmp) ;
-            createBodyBySpirit(stars, i % 2 == 0);
+            createBodyBySpirit(stars, true);
             SpiritContain.getInstance().addSpirit(stars);
         }
 
