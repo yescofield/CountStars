@@ -3,6 +3,7 @@ package com.yezimm.yesco.countstars.spirit;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.widget.Toast;
 
@@ -30,8 +31,8 @@ public class Stars extends Spirit{
     }
 
     @Override
-    public void onClick(Body body) {
-        Rect rect = new Rect((int)getX(), (int)getY(), getBodyBmp().getWidth(), getBodyBmp().getHeight());
+    public void onClick(Body body, Point point) {
+        Rect rect = new Rect(point.x, point.y, point.x + getBodyBmp().getWidth() / 2, point.y + getBodyBmp().getHeight() / 2);
         MainActivity.getInstance().getExplosionField().explode(getBodyBmp(), rect, 100, 1000);
         Toast.makeText(MainActivity.getInstance(), "Stars", Toast.LENGTH_SHORT).show();
     }
